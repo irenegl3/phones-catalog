@@ -11,6 +11,69 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.phone {
+.phone-col {
   padding-bottom: 15px;
+}
+.phone-card-img{
+  height:30%;
+}
+
+.card {
+  height: 100%;
+}
+
+.text {
+  width: 100%
+}
+
+.phone-img{
+  max-height:100%;
+  /* max-width: 200px;
+  max-height: 250px;
+  padding:15px;
+  margin: auto; */
+}
+
+.card-img-personalized {
+  padding:20px;
+  height: 50%;
+}
+
+.catalogue{
+  display:block;
+  padding: 40px;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+p {
+  opacity: .5;
+}
+
+.catalogue-header {
+  width: 100%;
+  margin: 50px 0 0 0;
+  position:relative;
+  color: rgb(79, 107, 107);
+  left: 50%;
+  text-align:center;
+  transform:translate(-50%, -50%);
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+.card-body{
+  box-sizing: border-box;
+  align-items:flex-start
+}
+
+.card-footer-personalized {
+  background-color:white;
+  border-top:none;
+  align-items:flex-end
 }
