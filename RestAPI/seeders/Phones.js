@@ -11,7 +11,7 @@ module.exports = {
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                     color: "black",
                     price: 350,
-                    imageFileName: "IPhone_7.png",
+                    imageFileName: "iPhone_7.png",
                     screen: "4,7 inch IPS",
                     processor: "A10 Fusion",
                     ram: 2
@@ -22,7 +22,7 @@ module.exports = {
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                     color: "white",
                     price: 450,
-                    imageFileName: "IPhone_8.png",
+                    imageFileName: "iPhone_8.png",
                     screen: "4,7 inch IPS",
                     processor: "A11 Bionic",
                     ram: 2
@@ -33,7 +33,7 @@ module.exports = {
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                     color: "grey",
                     price: 500,
-                    imageFileName: "IPhone_X.png",
+                    imageFileName: "iPhone_X.png",
                     screen: "5,8 inch IPS",
                     processor: "A11 Bionic",
                     ram: 3
@@ -44,21 +44,10 @@ module.exports = {
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                     color: "black",
                     price: 1000,
-                    imageFileName: "IPhone_12.png",
+                    imageFileName: "iPhone_12.png",
                     screen: "6,1 inch IPS",
                     processor: "A14 Bionic",
                     ram: 4
-                },
-                {
-                    name: 'iPhone 6',
-                    manufacturer: 'Apple',
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    color: "black",
-                    price: 500,
-                    imageFileName: "IPhone_6.png",
-                    screen: "4,7 inch IPS",
-                    processor: "A10 Fusion",
-                    ram: 2
                 },
                 {
                     name: 'Redmi K30S',
@@ -96,13 +85,13 @@ module.exports = {
             ]);
         } catch (error) {
             if (error instanceof UniqueConstraintError) {
-                console.warn('Los permisos ya existen');
+                console.warn('Phones already exist.');
             } else {
                 console.error(error);
             }
         }
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.bulkDelete('Permisos', null, {});
+        return queryInterface.bulkDelete('Phones', null, {});
     }
 };
