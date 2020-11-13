@@ -4,7 +4,11 @@ var models = require('../models');
 
 exports.getAllPhones = async function (req, res, next) {
     try {
-        let phones = await models.Phone.findAll({});
+        let phones = await models.Phone.findAll({
+            order: [
+                ['name', 'ASC'],
+            ],
+        });
        // console.log(JSON.stringify(phones));
         res.json(phones)
         //return phones;
