@@ -5,12 +5,11 @@ module.exports = {
     return queryInterface.createTable('Phones', {
       id: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+        autoIncrement: true
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        primaryKey: true
       },
       manufacturer: {
         type: Sequelize.STRING

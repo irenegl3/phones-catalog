@@ -4,11 +4,11 @@ module.exports = function (sequelize, DataTypes) {
         // Model attributes 
         id: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            primaryKey: true
         },
         manufacturer: {
             type: DataTypes.STRING
