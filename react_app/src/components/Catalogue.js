@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Card, Button, CardDeck, Modal } from 'react-bootstrap';
 import Info from './Info';
+import FormCreate from './FormCreate';
 
 class Catalogue extends Component {
   constructor(props) {
@@ -9,8 +10,8 @@ class Catalogue extends Component {
     this.createPhone = this.createPhone.bind(this);
   }
 
-  handleSelected(phone, info) {
-    this.props.handleSelected(phone, info);
+  handleSelected(phone, modal) {
+    this.props.handleSelected(phone, modal);
   }
 
   displayText(text) {
@@ -22,8 +23,8 @@ class Catalogue extends Component {
     }
   }
 
-  createPhone(){
-    this.props.createPhone();
+  createPhone(paramsToUpdate){
+    this.props.handleChangeOfState(null,paramsToUpdate);
   }
 
   render() {
@@ -35,6 +36,11 @@ class Catalogue extends Component {
         handleClose={this.handleSelected}
       >
       </Info>
+    } else if (this.props.form){
+      modal =<FormCreate 
+       handleClose={this.handleSelected}
+       createPhone={this.createPhone}
+      ></FormCreate>
     }
 
     let length = this.props.phones.length;
@@ -90,7 +96,7 @@ class Catalogue extends Component {
                         </Card.Text>
                       </Card.Body>
                       <Card.Footer className={"card-footer-personalized"}>
-                        <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.createPhone}>Add phone</Button>
+                        <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.showForm()}>Add phone</Button>
                       </Card.Footer>
                     </Row>
                   </Card>

@@ -22,6 +22,24 @@ p {
   opacity: .7;
 }
 
+a:hover{
+  color: #17ae8e;
+}
+
+.nav {
+  background-color: #353745;
+  font-weight: 500;
+}
+
+.nav-link {
+  color:white;
+  opacity: .7;
+}
+
+.nav-link.active {
+  background-color: #17ae8e !important;
+}
+
 .catalogue{
   display:block;
   padding: 40px;
@@ -97,9 +115,28 @@ p {
   font-size:15px;
 }
 
+.btn-add {
+   color: #17ae8e; 
+   border-color: #17ae8e; 
+}
+
+.btn-add:hover {
+  background-color:#17ae8e;
+   border-color: #17ae8e; 
+}
 .footer {
   background-color: #353745;
   color: white;
   text-align: center;
   padding:5px;
+}
+
+.wrapper {
+  display:contents;
+}
+
+@media screen and (min-width: 0px) and (max-width: 550px) {
+  .wrapper{
+    display: block;
+  }
 }

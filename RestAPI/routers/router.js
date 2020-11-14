@@ -11,9 +11,8 @@ router.get(`/`, async function (req, res, next) {
 });
 
 router.get('/phones', controller.getAllPhones);
-//router.get('/phones/:id', controller.getInfoPhone);
-// router.post('/createPhone', controller.createPhone);
-// router.post('/updatePhone', controller.updatePhone);
+router.post('/phones', controller.configureMultiPartFormData, controller.updateOrCreatePhone)
+
 // router.delete('/deletePhone', controller.deletePhone);
 
 module.exports = router;
