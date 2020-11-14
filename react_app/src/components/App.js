@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import LoadingOverlay from 'react-loading-overlay';
 import Catalogue from './Catalogue';
+import { Modal } from 'react-bootstrap';
 let urljoin = require('url-join');
 const service = process.env.SERVICE || 'http://localhost:3001';
 const apiBaseUrl = process.env.NODE_ENV === "development" ? urljoin(service) : window.location.href
@@ -37,14 +38,14 @@ class App extends Component {
   }
 
   render() {
-    let phones;
-    if(this.state.loading == true) {
-      phones= "Loading...";
+    let catalogue;
+    if (this.state.loading == true) {
+      catalogue = "Loading...";
     }
     else {
-      phones= <Catalogue
-      phones={this.state.phones}
-    />
+      catalogue = <Catalogue
+        phones={this.state.phones}
+      />
     }
 
     return (
@@ -55,8 +56,12 @@ class App extends Component {
             spinner
             text='Loading...'
           >
-            {phones}
+            {catalogue}
           </LoadingOverlay>
+        </div>
+        <div className={"footer"}>
+          <p>Irene García López</p>
+          <p>November 2020</p>
         </div>
       </div>
     );
