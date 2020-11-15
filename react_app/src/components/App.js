@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Catalogue from './Catalogue';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Alert } from 'react-bootstrap';
 
 let urljoin = require('url-join');
 const service = process.env.SERVICE || 'http://localhost:3001';
@@ -19,11 +19,14 @@ class App extends Component {
       info: null,
       formCreate: null,
       formUpdate: null,
-      delete: false
+      delete: false,
+      error: false,
+      confirm: null
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChangeOfState = this.handleChangeOfState.bind(this);
     this.deletePhone = this.deletePhone.bind(this);
+    this.deletePhoneConfirmed = this.deletePhoneConfirmed.bind(this);
   }
 
   componentDidMount() {
@@ -32,19 +35,22 @@ class App extends Component {
     })
     axios.get(urljoin(apiBaseUrl, "/phones"))
       .then((response) => {
-       // setTimeout(() => { //to check the loading spinner
-          this.setState({
-            loading: null,
-            phones: response.data
-          })
-      //  }, 1000);
+        // setTimeout(() => { //to check the loading spinner
+        this.setState({
+          loading: null,
+          phones: response.data
+        })
+        //  }, 1000);
       })
       .catch((error) => {
         this.setState({
-          loading: null
+          loading: null,
+          error: true
         })
-        alert(`Erros when connecting to the server. ${error.response && error.response.data ?
-          error.response.data.error || '' : ''}`)
+
+        //alert(`Error when connecting to the server. ${error.response && error.response.data ?
+        // error.response.data.error || '' : ''}`)
+        console.log(error);
       })
 
   }
@@ -72,17 +78,27 @@ class App extends Component {
         this.setState({
           formCreate: null,
           formUpdate: null,
-          info: null
+          info: null,
+          confirm: null
         });
         break;
     }
   }
+
   deletePhone(id) {
+    this.setState({
+      selected: id,
+      confirm: true
+    });
+  }
+
+  deletePhoneConfirmed(id) {
     let newPhones = this.state.phones.slice();
     let formData = new FormData();
     this.setState({
       loading: true,
-      selected: null
+      selected: null,
+      confirm: null
     });
     let aux;
     for (let i = 0; i < newPhones.length; i++) {
@@ -103,9 +119,10 @@ class App extends Component {
       })
       .catch((error) => {
         this.setState({
-          loading: null
+          loading: null,
+          error: true
         });
-        alert(`Error when connecting to server. ${error}`);
+        //alert(`Error when connecting to server. ${error}`);
         console.log(error);
       })
   }
@@ -176,9 +193,10 @@ class App extends Component {
       })
       .catch((error) => {
         this.setState({
-          loading: null
+          loading: null,
+          error: true
         });
-        alert(`Error when connecting to server. ${error}`);
+        //alert(`Error when connecting to server. ${error}`);
         console.log(error);
       })
   }
@@ -187,33 +205,41 @@ class App extends Component {
   render() {
     let catalogue;
     if (this.state.loading === true) {
-      catalogue = 
-      <div className={"spinner"}><Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner></div>
+      catalogue =
+        <div className={"spinner"}><Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner></div>
     }
-    else {
+    else if (!this.state.error) {
       catalogue = <div >
-      <Catalogue
-        phones={this.state.phones}
-        selected={this.state.selected}
-        info={this.state.info}
-        formCreate={this.state.formCreate}
-        formUpdate={this.state.formUpdate}
-        handleClick={this.handleClick}
-        handleChangeOfState={this.handleChangeOfState}
-        deletePhone={this.deletePhone}
-      />
-      <div className={"footer"}>
+        <Catalogue
+          phones={this.state.phones}
+          selected={this.state.selected}
+          info={this.state.info}
+          formCreate={this.state.formCreate}
+          formUpdate={this.state.formUpdate}
+          handleClick={this.handleClick}
+          handleChangeOfState={this.handleChangeOfState}
+          deletePhone={this.deletePhone}
+          deletePhoneConfirmed={this.deletePhoneConfirmed}
+          confirm={this.state.confirm}
+        />
+        <div className={"footer"}>
           <p>Irene García López</p>
           <p>November 2020</p>
         </div>
-        </div>
+      </div>
     }
 
     return (
       <div>
-          {catalogue}
+        {this.state.error && <Alert variant="danger" >
+          <Alert.Heading>Oh snap, there has been an error!</Alert.Heading>
+          <p>
+            Error connecting to the server. Try again later.
+          </p>
+        </Alert>}
+        {catalogue}
       </div>
     );
   }
