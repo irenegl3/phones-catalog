@@ -4,7 +4,7 @@ import Info from './Info';
 import FormCreate from './FormCreate';
 import FormUpdate from './FormUpdate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit,faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 class Catalogue extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class Catalogue extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.createPhone = this.createPhone.bind(this);
     this.updatePhone = this.updatePhone.bind(this);
+    this.deletePhone = this.deletePhone.bind(this);
   }
 
   handleClick(phone, service) {
@@ -33,6 +34,12 @@ class Catalogue extends Component {
 
   updatePhone(phoneId,paramsToUpdate) {
     this.props.handleChangeOfState(phoneId, paramsToUpdate);
+  }
+
+  deletePhone(phoneId){
+    if (confirm(`Are you sure you want to delete this phone?`)) {
+      this.props.deletePhone(phoneId);
+    }
   }
 
   render() {
@@ -108,6 +115,7 @@ class Catalogue extends Component {
                       <Card.Footer className={"card-footer-personalized"}>
                         <Button variant="link" onClick={() => this.handleClick(phone, 'info')}>{'>'} More info</Button>
                         <Button variant="link" onClick={() => this.handleClick(phone, 'update')}><FontAwesomeIcon icon={faEdit} /></Button>           
+                        <Button variant="link" onClick={() => this.deletePhone(phone.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>           
                       </Card.Footer>
                     </Row>
                   </Card>

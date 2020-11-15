@@ -47,6 +47,20 @@ const updatePhone = async function (phoneId, paramsToUpdate) {
     }
 }
 
+const deletePhone = async function (phoneId) {
+    try {
+        let res = await models.Phone.destroy({
+            where: {
+                id: phoneId
+            },
+            returning: true,
+        });
+        return res
+    } catch (error) {
+        throw error;
+    }
+}
+
 exports.getAllPhones = async function (req, res, next) {
     try {
         let phones = await models.Phone.findAll({
@@ -84,13 +98,24 @@ exports.configureMultiPartFormData = async function (req, res, next) {
 
 exports.updateOrCreatePhone = async function (req, res, next) {
     try {
-        let respuesta = {};
+        let aux = {};
         if (req.body.phoneId === "") {
-            respuesta = await createNewPhone(req.body.paramsToUpdate.name, req.body.paramsToUpdate.manufacturer, req.body.paramsToUpdate.description, req.body.paramsToUpdate.color, req.body.paramsToUpdate.price, req.body.paramsToUpdate.imageFileName, req.body.paramsToUpdate.screen, req.body.paramsToUpdate.processor, req.body.paramsToUpdate.ram);
+            aux = await createNewPhone(req.body.paramsToUpdate.name, req.body.paramsToUpdate.manufacturer, req.body.paramsToUpdate.description, req.body.paramsToUpdate.color, req.body.paramsToUpdate.price, req.body.paramsToUpdate.imageFileName, req.body.paramsToUpdate.screen, req.body.paramsToUpdate.processor, req.body.paramsToUpdate.ram);
         } else {
-            respuesta = await updatePhone(req.body.phoneId, req.body.paramsToUpdate);
+            aux = await updatePhone(req.body.phoneId, req.body.paramsToUpdate);
         }
-        res.json(respuesta)
+        res.json(aux)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
+    }
+}
+
+exports.deletePhone = async function (req, res, next) {
+    try {
+        let aux = {};
+        aux = await deletePhone(req.params.id);
+        res.json(aux)
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: error.message });
