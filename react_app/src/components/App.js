@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Catalogue from './Catalogue';
-// import NavCatalogue from './Nav';
-// import Menu from './Menu';
 
 let urljoin = require('url-join');
 const service = process.env.SERVICE || 'http://localhost:3001';
@@ -18,11 +16,11 @@ class App extends Component {
       loading: null,
       selected: null,
       info: null,
-      form: null
+      formCreate: null,
+      formUpdate:null
     };
-    this.handleSelected = this.handleSelected.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleChangeOfState = this.handleChangeOfState.bind(this);
-    this.showForm = this.showForm.bind(this);
   }
 
   componentDidMount() {
@@ -45,40 +43,58 @@ class App extends Component {
       })
   }
 
-  showForm() {
-    console.log("show formn");
-    this.setState({
-      form: true
-    })
-  }
-
-  handleSelected(phone, modal) {
-    this.setState({
-      selected: phone,
-      info: modal,
-      form: modal
-    })
+  handleClick(phone, service) {
+    switch (service) {
+      case 'create':
+        this.setState({
+          formCreate: true
+        });
+        break;
+      case 'info':
+        this.setState({
+          selected: phone,
+          info: true
+        });
+        break;
+      case 'update':
+        this.setState({
+          selected: phone,
+          formUpdate: true
+        });
+        break;
+      default: 
+      this.setState({
+        formCreate: null,
+        formUpdate: null,
+        info:null
+      });
+      break;
+    }
   }
 
   handleChangeOfState(id, paramsToUpdate) {
-    console.log(id, paramsToUpdate);
     let newPhones = this.state.phones.slice();
     let formData = new FormData();
     this.setState({
       loading: true,
       selected: null,
-      form:null
+      formCreate: null,
+      formUpdate: null
     });
     let aux;
     let phoneId = ""; //ver que tipo es
+    let targetPhone;
 
     // If id, update existing phone
     if (id) {
-      console.log('update');
-      //phone tiene que existir, el seleccionado
       phoneId = id;
-      // aux = id;
-      // phone = newPhones[id];
+      for(let i=0;i<newPhones.length;i++){
+        if(newPhones[i].id === id){
+          targetPhone = newPhones[i];
+          aux = i;
+          break;
+        }
+      }
     }
     // If id is null, create new phone 
     else {
@@ -92,13 +108,12 @@ class App extends Component {
       }
     })
       .then((response) => {
-        let res = response.data;
+        let res ={};
+        res = response.data;
         // phone already exists
-        console.log("respuesta:", res);
         if (res === null) {
           this.setState({
-            loading: null,
-            form: null
+            loading: null
           })
           alert('The phone you are trying to insert already exists.');
         }
@@ -106,20 +121,26 @@ class App extends Component {
           if (!id) {
             newPhones.push(res);
           } else { // update
-            // newPhones[aux].estadoPeticion = response.data.estadoPeticion || response.data[1][0].estadoPeticion;
-
+            newPhones[aux].id = res[1][0].id;
+            newPhones[aux].name = res[1][0].name;
+            newPhones[aux].manufacturer = res[1][0].manufacturer;
+            newPhones[aux].description = res[1][0].description;
+            newPhones[aux].color = res[1][0].color;
+            newPhones[aux].screen = res[1][0].screen;
+            newPhones[aux].processor = res[1][0].processor;
+            newPhones[aux].imageFileName = res[1][0].imageFileName;
+            newPhones[aux].ram = res[1][0].ram;
+            newPhones[aux].price = res[1][0].price;
           }
           this.setState({
             phones: newPhones,
-            loading: null,
-            form: null
+            loading: null
           })
         }
       })
       .catch((error) => {
         this.setState({
-          loading: null,
-          form: null
+          loading: null
         });
         alert(`Error en la conexión con el servidor. ${error}`);
         console.log(error);
@@ -137,9 +158,9 @@ class App extends Component {
         phones={this.state.phones}
         selected={this.state.selected}
         info={this.state.info}
-        form={this.state.form}
-        showForm={this.showForm}
-        handleSelected={this.handleSelected}
+        formCreate={this.state.formCreate}
+        formUpdate={this.state.formUpdate}
+        handleClick={this.handleClick}
         handleChangeOfState={this.handleChangeOfState}
       />
     }

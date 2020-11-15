@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Card, Button, CardDeck, Modal } from 'react-bootstrap';
 import Info from './Info';
 import FormCreate from './FormCreate';
+import FormUpdate from './FormUpdate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 class Catalogue extends Component {
   constructor(props) {
     super(props);
-    this.handleSelected = this.handleSelected.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.createPhone = this.createPhone.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
   }
 
-  handleSelected(phone, modal) {
-    this.props.handleSelected(phone, modal);
+  handleClick(phone, service) {
+    this.props.handleClick(phone, service);
   }
 
   displayText(text) {
@@ -23,40 +27,68 @@ class Catalogue extends Component {
     }
   }
 
-  createPhone(paramsToUpdate){
-    this.props.handleChangeOfState(null,paramsToUpdate);
+  createPhone(paramsToUpdate) {
+    this.props.handleChangeOfState(null, paramsToUpdate);
+  }
+
+  updatePhone(phoneId,paramsToUpdate) {
+    this.props.handleChangeOfState(phoneId, paramsToUpdate);
   }
 
   render() {
-    // Get more info requested
     let modal;
     if (this.props.info) {
       modal = <Info
         phone={this.props.selected}
-        handleClose={this.handleSelected}
-      >
-      </Info>
-    } else if (this.props.form){
-      modal =<FormCreate 
-       handleClose={this.handleSelected}
-       createPhone={this.createPhone}
+        handleClose={this.handleClick}
+      ></Info>
+    } else if (this.props.formCreate) {
+      modal = <FormCreate
+        handleClose={this.handleClick}
+        createPhone={this.createPhone}
       ></FormCreate>
+    } else if (this.props.formUpdate) {
+      modal = <FormUpdate
+        phone={this.props.selected}
+        handleClose={this.handleClick}
+        updatePhone={this.updatePhone}
+      ></FormUpdate>
     }
-
     let length = this.props.phones.length;
-
-    return (
-      <div className={"catalogue"}>
-        <div className={"catalogue-header"}>
-          <h1>Phone catalogue</h1>
-          <div className={"line-title"}></div>
-          <p>Know more about our phones!</p>
-        </div>
-        <Container>
-          <Row>
-            <CardDeck>
-              {this.props.phones.map((phone, index) => (
-                <div className={"wrapper"}>
+    let catalogue;
+    if (length == 0) {
+      catalogue = <Container>
+        <Row>
+            <Col xs={8} sm={6} md={4} lg={3} className="col-personalized" key={-1}>
+              <Card >
+                <Row className={"card-img-personalized"} >
+                  <Card.Img src={"add.png"} className={"phone-img"} />
+                </Row>
+                <Row className={"card-body-personalized"}>
+                  <Card.Body>
+                    <Card.Title>Add a new phone</Card.Title>
+                    <div className={"line-card"}>
+                    </div>
+                    <br></br>
+                    <Card.Text>
+                      Click here to add a new phone into the catalogue.
+                        </Card.Text>
+                  </Card.Body>
+                  <Card.Footer className={"card-footer-personalized"}>
+                    <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.handleClick(null,'create')}>Add phone</Button>
+                  </Card.Footer>
+                </Row>
+              </Card>
+            </Col>
+        </Row>
+      </Container>
+        ;
+    } else {
+      catalogue = <Container>
+        <Row>
+          <CardDeck>
+            {this.props.phones.map((phone, index) => (
+              <div className={"wrapper"}>
                 <Col xs={8} sm={6} md={4} lg={3} className="col-personalized" key={index}>
                   <Card >
                     <Row className={"card-img-personalized"} >
@@ -74,39 +106,50 @@ class Catalogue extends Component {
                         </Card.Text>
                       </Card.Body>
                       <Card.Footer className={"card-footer-personalized"}>
-                        <Button variant="link" onClick={() => this.handleSelected(phone, true)}>{'>'} More info</Button>
+                        <Button variant="link" onClick={() => this.handleClick(phone, 'info')}>{'>'} More info</Button>
+                        <Button variant="link" onClick={() => this.handleClick(phone, 'update')}><FontAwesomeIcon icon={faEdit} /></Button>           
                       </Card.Footer>
                     </Row>
                   </Card>
                 </Col>
-                {(index+1 === length) && 
-                <Col xs={8} sm={6} md={4} lg={3} className="col-personalized" key={index+1}>
-                  <Card >
-                    <Row className={"card-img-personalized"} >
-                      <Card.Img src={"template.png"} className={"phone-img"} />
-                    </Row>
-                    <Row className={"card-body-personalized"}>
-                      <Card.Body>
-                        <Card.Title>Add a new phone</Card.Title>
-                        <div className={"line-card"}>
-                        </div>
-                        <br></br>
-                        <Card.Text>
-                          Click here to add a new phone into the catalogue.
-                        </Card.Text>
-                      </Card.Body>
-                      <Card.Footer className={"card-footer-personalized"}>
-                        <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.showForm()}>Add phone</Button>
-                      </Card.Footer>
-                    </Row>
-                  </Card>
-                </Col>
-              }
-             </div> 
-              ))}
-            </CardDeck>
-          </Row>
-        </Container>
+                {(index + 1 === length) &&
+                  <Col xs={8} sm={6} md={4} lg={3} className="col-personalized" key={index + 1}>
+                    <Card >
+                      <Row className={"card-img-personalized"} >
+                        <Card.Img src={"add.png"} className={"phone-img"} />
+                      </Row>
+                      <Row className={"card-body-personalized"}>
+                        <Card.Body>
+                          <Card.Title>Add a new phone</Card.Title>
+                          <div className={"line-card"}>
+                          </div>
+                          <br></br>
+                          <Card.Text>
+                            Click here to add a new phone into the catalogue.
+                    </Card.Text>
+                        </Card.Body>
+                        <Card.Footer className={"card-footer-personalized"}>
+                          <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.handleClick(null,'create')}>Add phone</Button>
+                        </Card.Footer>
+                      </Row>
+                    </Card>
+                  </Col>
+                }
+              </div>
+            ))}
+          </CardDeck>
+        </Row>
+      </Container>
+    }
+
+    return (
+      <div className={"catalogue"}>
+        <div className={"catalogue-header"}>
+          <h1>Phone catalogue</h1>
+          <div className={"line-title"}></div>
+          <p>Know more about our phones!</p>
+        </div>
+        {catalogue}
         {modal}
       </div>
     );

@@ -33,6 +33,20 @@ const createNewPhone = async function (name, manufacturer, description, color, p
     }
 }
 
+const updatePhone = async function (phoneId, paramsToUpdate) {
+    try {
+        let res = await models.Phone.update(paramsToUpdate, {
+            where: {
+                id: phoneId
+            },
+            returning: true,
+        });
+        return res
+    } catch (error) {
+        throw error;
+    }
+}
+
 exports.getAllPhones = async function (req, res, next) {
     try {
         let phones = await models.Phone.findAll({
@@ -70,12 +84,11 @@ exports.configureMultiPartFormData = async function (req, res, next) {
 
 exports.updateOrCreatePhone = async function (req, res, next) {
     try {
-        console.log("Body received:", req.body);
         let respuesta = {};
         if (req.body.phoneId === "") {
             respuesta = await createNewPhone(req.body.paramsToUpdate.name, req.body.paramsToUpdate.manufacturer, req.body.paramsToUpdate.description, req.body.paramsToUpdate.color, req.body.paramsToUpdate.price, req.body.paramsToUpdate.imageFileName, req.body.paramsToUpdate.screen, req.body.paramsToUpdate.processor, req.body.paramsToUpdate.ram);
         } else {
-            console.log("Updating phone ...")
+            respuesta = await updatePhone(req.body.phoneId, req.body.paramsToUpdate);
         }
         res.json(respuesta)
     } catch (error) {
