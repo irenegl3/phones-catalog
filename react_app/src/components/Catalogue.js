@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, Button, CardDeck, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, CardDeck, Modal, Alert } from 'react-bootstrap';
 import Info from './Info';
 import FormCreate from './FormCreate';
 import FormUpdate from './FormUpdate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit,faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 class Catalogue extends Component {
   constructor(props) {
@@ -12,11 +12,17 @@ class Catalogue extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.createPhone = this.createPhone.bind(this);
     this.updatePhone = this.updatePhone.bind(this);
+    this.deletePhoneConfirmation = this.deletePhoneConfirmation.bind(this);
     this.deletePhone = this.deletePhone.bind(this);
+    this.handleCloseConfirmation = this.handleCloseConfirmation.bind(this);
   }
 
   handleClick(phone, service) {
     this.props.handleClick(phone, service);
+  }
+
+  handleCloseConfirmation(){
+    this.props.handleClick();
   }
 
   displayText(text) {
@@ -32,14 +38,16 @@ class Catalogue extends Component {
     this.props.handleChangeOfState(null, paramsToUpdate);
   }
 
-  updatePhone(phoneId,paramsToUpdate) {
+  updatePhone(phoneId, paramsToUpdate) {
     this.props.handleChangeOfState(phoneId, paramsToUpdate);
   }
 
-  deletePhone(phoneId){
-    if (confirm(`Are you sure you want to delete this phone?`)) {
-      this.props.deletePhone(phoneId);
-    }
+  deletePhone(phoneId) {
+    this.props.deletePhone(phoneId);
+  }
+
+  deletePhoneConfirmation() {
+    this.props.deletePhoneConfirmed(this.props.selected);
   }
 
   render() {
@@ -61,32 +69,51 @@ class Catalogue extends Component {
         updatePhone={this.updatePhone}
       ></FormUpdate>
     }
+
+    let alert;
+     if (this.props.confirm) {
+      alert = <Modal show={true} onHide={this.handleCloseConfirmation}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Confirm your action please
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            You are about to delete a phone. Are you sure?
+        </p>
+        </Modal.Body >
+        <Modal.Footer> <Button onClick={() => this.deletePhoneConfirmation()} variant="outline-success">
+          Yes, I'm sure.
+          </Button></Modal.Footer>
+      </Modal >
+     }
     let length = this.props.phones.length;
     let catalogue;
     if (length == 0) {
       catalogue = <Container>
         <Row>
-            <Col xs={8} sm={6} md={4} lg={3} className="col-personalized" key={-1}>
-              <Card >
-                <Row className={"card-img-personalized"} >
-                  <Card.Img src={"add.png"} className={"phone-img"} />
-                </Row>
-                <Row className={"card-body-personalized"}>
-                  <Card.Body>
-                    <Card.Title>Add a new phone</Card.Title>
-                    <div className={"line-card"}>
-                    </div>
-                    <br></br>
-                    <Card.Text>
-                      Click here to add a new phone into the catalogue.
+          <Col xs={8} sm={6} md={4} lg={3} className="col-personalized" key={-1}>
+            <Card >
+              <Row className={"card-img-personalized"} >
+                <Card.Img src={"add.png"} className={"phone-img"} />
+              </Row>
+              <Row className={"card-body-personalized"}>
+                <Card.Body>
+                  <Card.Title>Add a new phone</Card.Title>
+                  <div className={"line-card"}>
+                  </div>
+                  <br></br>
+                  <Card.Text>
+                    Click here to add a new phone into the catalogue.
                         </Card.Text>
-                  </Card.Body>
-                  <Card.Footer className={"card-footer-personalized"}>
-                    <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.handleClick(null,'create')}>Add phone</Button>
-                  </Card.Footer>
-                </Row>
-              </Card>
-            </Col>
+                </Card.Body>
+                <Card.Footer className={"card-footer-personalized"}>
+                  <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.handleClick(null, 'create')}>Add phone</Button>
+                </Card.Footer>
+              </Row>
+            </Card>
+          </Col>
         </Row>
       </Container>
         ;
@@ -114,8 +141,8 @@ class Catalogue extends Component {
                       </Card.Body>
                       <Card.Footer className={"card-footer-personalized"}>
                         <Button variant="link" onClick={() => this.handleClick(phone, 'info')}>{'>'} More info</Button>
-                        <Button variant="link" onClick={() => this.handleClick(phone, 'update')}><FontAwesomeIcon icon={faEdit} /></Button>           
-                        <Button variant="link" onClick={() => this.deletePhone(phone.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>           
+                        <Button variant="link" onClick={() => this.handleClick(phone, 'update')}><FontAwesomeIcon icon={faEdit} /></Button>
+                        <Button variant="link" onClick={() => this.deletePhone(phone.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
                       </Card.Footer>
                     </Row>
                   </Card>
@@ -137,7 +164,7 @@ class Catalogue extends Component {
                     </Card.Text>
                         </Card.Body>
                         <Card.Footer className={"card-footer-personalized"}>
-                          <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.handleClick(null,'create')}>Add phone</Button>
+                          <Button variant="outline-primary" className={"btn-add"} size="lg" onClick={() => this.props.handleClick(null, 'create')}>Add phone</Button>
                         </Card.Footer>
                       </Row>
                     </Card>
@@ -159,6 +186,7 @@ class Catalogue extends Component {
         </div>
         {catalogue}
         {modal}
+        {alert}
       </div>
     );
   }
