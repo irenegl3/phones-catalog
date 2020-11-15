@@ -102,7 +102,7 @@ class FormCreate extends Component {
                                 <Form.Label column sm="2">GB</Form.Label>
                             </Form.Group>
                             <Form.Group>
-                                <Button variant="primary" type="submit"  onClick={this.handleSubmit}>Create</Button>
+                                <Button variant="outline-success" type="submit"  onClick={this.handleSubmit}>Create</Button>
                             </Form.Group>
                         </Form>
                     </Modal.Body >

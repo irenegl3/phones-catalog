@@ -120,7 +120,7 @@ class FormUpdate extends Component {
                                 <Form.Label column sm="2">GB</Form.Label>
                             </Form.Group>
                             <Form.Group>
-                                <Button variant="primary" type="submit" onClick={this.handleSubmit}>Update</Button>
+                                <Button variant="outline-success" onClick={this.handleSubmit}>Update</Button>
                             </Form.Group>
                         </Form>
                     </Modal.Body >
