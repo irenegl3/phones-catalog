@@ -140,3 +140,10 @@ a:hover{
     display: block;
   }
 }
+
+.spinner-border {
+  margin:auto;
+  margin-top:10rem;
+  display:block;
+  padding: 25px;
+}
