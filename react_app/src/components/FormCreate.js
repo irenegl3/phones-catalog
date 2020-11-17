@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 class FormCreate extends Component {
     constructor(props) {
@@ -12,14 +12,13 @@ class FormCreate extends Component {
             invalidcolor: true,
             invaliddescription: true,
             invalidscreen: true,
-            invalidimage: true,
+            invalidimagefile: true,
             invalidprocessor: true,
             invalidram: true,
             invalidprice: true
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.charsCounter = this.charsCounter.bind(this);
-        this.name = React.createRef();
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -30,7 +29,9 @@ class FormCreate extends Component {
         state[evt.target.name] = "invalid" + evt.target.name;
         // params to update state
         let paramsToUpdate = this.state.paramsToUpdate;
-        paramsToUpdate[evt.target.name] = value;
+        if (evt.target.name !== "imagefile") {
+            paramsToUpdate[evt.target.name] = value;
+        }
         // update states
         this.setState({
             [state[evt.target.name]]: false,
@@ -49,6 +50,11 @@ class FormCreate extends Component {
             this.setState({
                 [state[evt.target.name]]: true
             });
+        }
+
+        // handling image
+        if (evt.target.name === "imagefile") {
+            paramsToUpdate.imageFileName = evt.target.value;
         }
     }
 
@@ -118,9 +124,9 @@ class FormCreate extends Component {
                                 <Form.Label column sm="2">€</Form.Label>
                             </Form.Group>
                             <Form.Group as={Row}>
-                                <Form.Label column sm="2">Image</Form.Label>
-                                <Col sm="10">
-                                    <Form.Control type="text" name="image" isInvalid={this.state.invalidimage} onChange={this.handleChange} />
+                                <Form.Label column sm="3">Image URL</Form.Label>
+                                <Col sm="9">
+                                    <Form.Control type="url" name="imagefile" isInvalid={this.state.invalidimagefile} onChange={this.handleChange} />
                                     <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
                                 </Col>
                             </Form.Group>
