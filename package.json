@@ -1,8 +1,27 @@
 {
-  "name": "react_app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "restapi",
+  "version": "1.0.0",
+  "description": "App that provides phones' information",
+  "main": "index.js",
+  "scripts": {
+    "startApp": "node index.js",
+    "startReact": "react-scripts start",
+    "buildReact": "react-scripts build",
+    "testReact": "react-scripts test",
+    "ejectReact": "react-scripts eject"
+  },
+  "author": "Irene <irenegarcia3096@gmail.com>",
+  "license": "MIT",
   "dependencies": {
+    "busboy": "0.3.1",
+    "cors": "2.8.5",
+    "ejs": "3.1.5",
+    "express": "4.17.1",
+    "path": "0.12.7",
+    "pg": "8.5.0",
+    "sequelize": "6.3.5",
+    "sequelize-cli": "6.2.0",
+    "sqlite3": "5.0.0",
     "@fortawesome/fontawesome-free-solid": "5.0.13",
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
@@ -19,12 +38,6 @@
     "react-scripts": "4.0.0",
     "url-join": "4.0.1",
     "web-vitals": "0.2.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
