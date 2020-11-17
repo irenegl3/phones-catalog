@@ -4,7 +4,7 @@
   "description": "App that provides phones' information",
   "main": "index.js",
   "scripts": {
-    "startApp": "node index.js",
+    "start": "node index.js",
     "startReact": "react-scripts start",
     "buildReact": "react-scripts build",
     "testReact": "react-scripts test",
