@@ -1,0 +1,10 @@
+version: '3'
+
+services: 
+   
+  phonecatalogue:
+    container_name: phonecatalogue_app
+    image: phone_catalogue
+    restart: always
+    ports: 
+      - "3000:3000"

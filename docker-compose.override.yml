@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  dbcatalogue:
+    container_name: phonecatalogue_db
+    image: postgres:9.6
+    restart: always
+    ports:
+      - 5555:5432
+    volumes:
+      - dbdatacatalogue:/var/lib/postgresql/data
+    env_file:
+      - phone-catalogue-db.env
+  phonecatalogue:
+    build: .
+    depends_on:
+      - dbcatalogue
+    env_file:
+      - phone-catalogue.env
+
+volumes:
+  dbdatacatalogue:
+
+
+
+    
