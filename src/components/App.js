@@ -5,8 +5,8 @@ import Catalogue from './Catalogue';
 import { Spinner, Alert } from 'react-bootstrap';
 
 let urljoin = require('url-join');
-const service = process.env.SERVICE || 'http://localhost:3001';
-const apiBaseUrl = process.env.NODE_ENV === "development" ? urljoin(service) : window.location.href
+const service = 'http://localhost:3002'; //server port
+const apiBaseUrl = urljoin(service);
 
 
 class App extends Component {
