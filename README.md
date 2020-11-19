@@ -126,7 +126,53 @@ For this option, you must have a PostgreSQL database created. Set the db variabl
 
 ### Option 3: using a docker image 
 For this option, you just need to have docker and docker-compose installed.
+1. Create a folder for the application and move to it:
+```
+	mkdir app
+	cd app
+```
+1. Create a docker-compose.yml just like the file of this repo inside the app folder:
+```shell 
+version: '3'
 
-1. Download the image from the Docker Hub: https://hub.docker.com/repository/docker/irenegl3/phonecatalogue/general or type de commando ```docker pull irenegl3/phonecatalogue:latest ```.
-2. Run the command ```docker-compose up -d``` to create the container using the image.
-3. Once it is up and running, go to the url http://localhost:3000. If you want to change the port, see the option 2 section and change it on the files from the container.
+services: 
+   
+  app:
+    container_name: phonecatalogue_app
+    image: phone_catalogue
+    restart: always
+    ports: 
+      - "3002:3002" #host_port:container_port
+    image: irenegl3/phonecatalogue:latest
+    depends_on:
+      - db
+    env_file:
+      - phone-catalogue.env
+
+  db:
+    container_name: phonecatalogue_db
+    image: postgres:latest
+    restart: always
+    volumes:
+      - ./init.sql:/init.sql
+    env_file:
+      - phone-catalogue-db.env
+```
+2. Create the phone-cataloge.env file just like the file of this repo inside the app folder:
+```shell
+POSTGRES_DB=phonesCatalogue
+DB_USERNAME=postgres
+DB_PASSWORD=1234
+DB_HOST=db
+DB_PORT=5432
+SERVER_PORT=3002
+OPTION=2
+```
+3. Create the phone-cataloge-db.env file just like the file of this repo inside the app folder:
+````shell
+POSTGRES_DB=phonesCatalogue
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=1234
+```
+4. Now, the files required for creating the containers are ready. Run the command in the app folder :```docker-compose up  -d``` to create the container using the image.
+3. Once it is up and running, go to the url http://localhost:3002. If you want to change the port, you must change the host_port on the docker-compose,yml file.
