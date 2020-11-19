@@ -128,5 +128,5 @@ For this option, you must have a PostgreSQL database created. Set the db variabl
 For this option, you just need to have docker and docker-compose installed.
 
 1. Download the image from the Docker Hub: https://hub.docker.com/repository/docker/irenegl3/phonecatalogue/general or type de commando ```docker pull irenegl3/phonecatalogue:latest ```.
-2. Run the commando ```docker-compose up -d``` to create the container using the image.
+2. Run the command ```docker-compose up -d``` to create the container using the image.
 3. Once it is up and running, go to the url http://localhost:3000. If you want to change the port, see the option 2 section and change it on the files from the container.
