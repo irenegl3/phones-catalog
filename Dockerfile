@@ -8,7 +8,4 @@ RUN npm install
 
 COPY . .
 
-
-EXPOSE 5432:5432
-
 CMD ./script.sh
