@@ -75,7 +75,7 @@ To create the react part, the module create-react-app has been used (https://git
 ```shell
 npm startReact
 ```
-When the application is ready for production, it is build by using the command:
+When the application is ready for production, it is built by using the command:
 ```shell
 npm buildReact
 ```
@@ -84,8 +84,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Docker Compose
 Docker compose has been used to run the application and the database in order to falicitate the deployment. Two services have been created:
-- dbcatalogue: built over a postgres image, on port 5555 that enables the connection to the internal postgreSQL port 5432
-- phonecatalogue: built with the code of the application and that depends on the other service
+- **dbcatalogue:** built over a postgres image, on port 5555 that enables the connection to the internal postgreSQL port 5432
+- **phonecatalogue:** built with the code of the application and that depends on the other service
 
 To create the image: 
 ```shell 
@@ -102,18 +102,18 @@ Once it is launched, the application is accesible on the URL : http://localhost:
 
 The option 3 is the recommended one because of its simplicity.
 
-### Option 1: separate apps on local
+### Option 1: separated apps on local
 For this option, you must have a PostgreSQL database created. Set the db variables on the phone-catalogue.env file to be able to connect the app to the database. The migration and seeder will create and poblate the phone table.
 
 1. Download the repository on your local host.
 2. Set the option variable in the phone-catalogue.env file to **1**.
 3. Set the port in which the server will be listening in the phone-catalogue.env (different from 3000, port predefined for the front part). SERVER_PORT=3001 for example
-4. Run ```npm start``` to start the server (inside the project folder). You could verify it on http://localhost:SERVER_PORT
-5. Now, start the react app. Set the service to be the same url as in previous step (with the SERVER_PORT you defined) in the /src/components/App.js: ```const service = 'http://localhost:3001'; ``` for example.
+4. Run ```npm start``` to start the server (inside the project folder). You could verify it on http://localhost:3001, following this example.
+5. Now, start the react app. Set the service to be the same url as in previous step (with the SERVER_PORT you defined) in the /src/components/App.js: ```const service = 'http://localhost:3001'; ```.
 6. Run: ```npm run startReact``` in other terminal (inside the project folder). It is launched in port 3000 by default.
 7. To successfully see the catalogue, browse to url: htttp://localhost:3000, where the react app is up.
 
-### Option 2: join app on local using react build
+### Option 2: joint app on local, using react build
 For this option, you must have a PostgreSQL database created. Set the db variables on the phone-catalogue.env file to be able to connect the app to the database. The migration and seeder will create and poblate the phone table.
 
 1. Download the repository on your local host.
@@ -122,7 +122,7 @@ For this option, you must have a PostgreSQL database created. Set the db variabl
 4. Set the service to be the same url as in previous step (with the SERVER_PORT you defined) in the /src/components/App.js: ```const service = 'http://localhost:3004'; ``` for example.
 5. Run the command: ```npm run buildReact```. This will create the build folder with the js required.
 6. Run: ```npm start```to launch the application.
-7. To successfully see the catalogue, browse to url: htttp://localhost:3004, where the react app is up.
+7. To successfully see the catalogue, browse to url: htttp://localhost:**3004**, where the react app is up. (Now it is the same port as the SERVER_PORT)
 
 ### Option 3: using a docker image 
 For this option, you just need to have docker and docker-compose installed.
