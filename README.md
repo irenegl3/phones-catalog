@@ -124,7 +124,7 @@ For this option, you must have a PostgreSQL database created. Set the db variabl
 6. Run: ```npm start```to launch the application.
 7. To successfully see the catalogue, browse to url: htttp://localhost:**3004**, where the react app is up. (Now it is the same port as the SERVER_PORT)
 
-### Option 3: using a docker image 
+### Option 3: using docker-compose
 For this option, you just need to have docker-compose installed.
 1. Create a folder for the application and move to it:
 ```
