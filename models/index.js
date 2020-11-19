@@ -3,8 +3,7 @@
 // Start the postgres database with ORM sequelize
 let Sequelize = require('sequelize');
 let sequelize;
-sequelize = new Sequelize('postgres://postgres:1234@localhost:5432/phoneCatalogue', {logging: false});
-
+sequelize = new Sequelize('postgres://' + process.env.DB_USERNAME + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + ':'+process.env.DB_PORT+'/' + process.env.POSTGRES_DB, {logging: false});
 let Phone = require('./Phone')(sequelize, Sequelize);
 
 (async () => {
