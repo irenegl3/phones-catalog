@@ -84,8 +84,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Docker Compose
 Docker compose has been used to run the application and the database in order to falicitate the deployment. Two services have been created:
-- **dbcatalogue:** built over a postgres image, on port 5555 that enables the connection to the internal postgreSQL port 5432
-- **phonecatalogue:** built with the code of the application and that depends on the other service
+- **db:** built over a postgres image, on port 5555 that enables the connection to the internal postgreSQL port 5432
+- **app:** built with the code of the application and that depends on the other service
 
 To create the image: 
 ```shell 
