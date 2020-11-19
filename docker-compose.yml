@@ -4,7 +4,7 @@ services:
    
   app:
     container_name: phonecatalogue_app
-    image: phone_catalogue
+    #image: phone_catalogue
     restart: always
     ports: 
       - "3002:3002" #host_port:container_port

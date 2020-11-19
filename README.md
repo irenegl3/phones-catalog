@@ -125,7 +125,7 @@ For this option, you must have a PostgreSQL database created. Set the db variabl
 7. To successfully see the catalogue, browse to url: htttp://localhost:**3004**, where the react app is up. (Now it is the same port as the SERVER_PORT)
 
 ### Option 3: using a docker image 
-For this option, you just need to have docker and docker-compose installed.
+For this option, you just need to have docker-compose installed.
 1. Create a folder for the application and move to it:
 ```
 	mkdir app
@@ -139,7 +139,6 @@ services:
    
   app:
     container_name: phonecatalogue_app
-    image: phone_catalogue
     restart: always
     ports: 
       - "3002:3002" #host_port:container_port
@@ -175,9 +174,9 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=1234
 ```
 4. Create the init.sql file just like the file of this repo inside the app folder:
-````
+```
 CREATE DATABASE IF NOT EXISTS phonesCatalogue;
 ```
-5. Now, the files required for creating the containers are ready. Run the command in the app folder :```docker-compose up  -d``` to create the container using the image.
+5. Now, the files required for creating the containers are ready. Run the command inside the app folder :```docker-compose up  -d``` to create the container using the image.
 
-6. Once it is up and running, go to the url http://localhost:3002. If you want to change the port, you must change the host_port on the docker-compose,yml file.
+6. Once it is up and running, go to the url http://localhost:3002. If you want to change the port, you must change the host_port on the docker-compose.yml file.
