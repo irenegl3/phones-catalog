@@ -169,10 +169,15 @@ SERVER_PORT=3002
 OPTION=2
 ```
 3. Create the phone-cataloge-db.env file just like the file of this repo inside the app folder:
-````shell
+```shell
 POSTGRES_DB=phonesCatalogue
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=1234
 ```
-4. Now, the files required for creating the containers are ready. Run the command in the app folder :```docker-compose up  -d``` to create the container using the image.
-3. Once it is up and running, go to the url http://localhost:3002. If you want to change the port, you must change the host_port on the docker-compose,yml file.
+4. Create the init.sql file just like the file of this repo inside the app folder:
+````
+CREATE DATABASE IF NOT EXISTS phonesCatalogue;
+```
+5. Now, the files required for creating the containers are ready. Run the command in the app folder :```docker-compose up  -d``` to create the container using the image.
+
+6. Once it is up and running, go to the url http://localhost:3002. If you want to change the port, you must change the host_port on the docker-compose,yml file.
