@@ -21,3 +21,6 @@ yarn-error.log*
 
 # config local database
 config
+
+#local envs
+.env
